@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Flow</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a2e; background: #fafafa; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    header { padding: 20px 0; }
+    .hero { text-align: center; padding: 80px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 0 0 40px 40px; margin-bottom: 60px; }
+    .hero h1 { font-size: 3rem; margin-bottom: 16px; font-weight: 700; }
+    .hero p { font-size: 1.25rem; max-width: 600px; margin: 0 auto 32px; opacity: 0.95; }
+    .cta-button { display: inline-block; padding: 16px 40px; background: white; color: #667eea; font-size: 1.1rem; font-weight: 600; border-radius: 50px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+    .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .features { padding: 60px 0; }
+    .features h2 { text-align: center; font-size: 2rem; margin-bottom: 48px; color: #2d2d44; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+    .feature-card { background: white; padding: 40px 32px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center; transition: transform 0.2s; }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-icon { font-size: 3rem; margin-bottom: 20px; }
+    .feature-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: #2d2d44; }
+    .feature-card p { color: #6b7280; font-size: 1rem; }
+    footer { text-align: center; padding: 40px 0; color: #9ca3af; font-size: 0.9rem; }
+    @media (max-width: 640px) { .hero { padding: 60px 0; } .hero h1 { font-size: 2rem; } .hero p { font-size: 1rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav style="display:flex; justify-content:space-between; align-items:center;">
+        <strong style="font-size:1.25rem;">Agent Flow</strong>
+      </nav>
+    </div>
+  </header>
+  <section class="hero">
+    <div class="container">
+      <h1>Agent Flow</h1>
+      <p>Orchestrate AI agents to automate complex workflows with a visual, intuitive platform that connects your ideas to results.</p>
+      <a href="#" class="cta-button">Get Started</a>
+    </div>
+  </section>
+  <section class="features">
+    <div class="container">
+      <h2>Core Capabilities</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h3>Visual Workflow Builder</h3>
+          <p>Design agent pipelines with drag-and-drop simplicity. Connect tasks visually and see your workflow come to life.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Parallel Execution</h3>
+          <p>Run multiple agents simultaneously. Agent Flow automatically manages dependencies and optimizes performance.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Secure Integration</h3>
+          <p>Connect to your existing tools and APIs safely. Built-in authentication keeps your data protected at every step.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Agent Flow. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
