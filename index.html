@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册 - Agent Flow</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .container { background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); padding: 40px; width: 100%; max-width: 420px; margin: 20px; }
+        h1 { color: #333; margin-bottom: 8px; font-size: 28px; text-align: center; }
+        .subtitle { color: #666; text-align: center; margin-bottom: 30px; font-size: 14px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; color: #444; margin-bottom: 8px; font-weight: 500; font-size: 14px; }
+        input { width: 100%; padding: 14px 16px; border: 2px solid #e1e1e1; border-radius: 8px; font-size: 16px; transition: border-color 0.3s; }
+        input:focus { outline: none; border-color: #667eea; }
+        input.error { border-color: #e74c3c; }
+        .error-text { color: #e74c3c; font-size: 12px; margin-top: 4px; display: none; }
+        .password-requirements { font-size: 12px; color: #888; margin-top: 4px; }
+        button[type="submit"] { width: 100%; padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        button[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
+        .footer-text { text-align: center; margin-top: 24px; color: #666; font-size: 14px; }
+        .footer-text a { color: #667eea; text-decoration: none; font-weight: 500; }
+        .footer-text a:hover { text-decoration: underline; }
+        .success-message { display: none; text-align: center; padding: 20px; background: #d4edda; border-radius: 8px; color: #155724; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>创建账户</h1>
+        <p class="subtitle">加入 Agent Flow，开始智能工作流程</p>
+        <div id="successMessage" class="success-message">注册成功！正在跳转到登录页面...</div>
+        <form id="registerForm" novalidate>
+            <section class="form-group">
+                <label for="email">电子邮箱</label>
+                <input type="email" id="email" name="email" placeholder="请输入您的邮箱" required>
+                <p id="emailError" class="error-text">请输入有效的电子邮箱地址</p>
+            </section>
+            <section class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" name="password" placeholder="请输入密码" required>
+                <p class="password-requirements">密码至少8位，包含大小写字母和数字</p>
+                <p id="passwordError" class="error-text">密码不符合要求</p>
+            </section>
+            <section class="form-group">
+                <label for="confirmPassword">确认密码</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="请再次输入密码" required>
+                <p id="confirmError" class="error-text">两次输入的密码不一致</p>
+            </section>
+            <button type="submit">注册</button>
+        </form>
+        <p class="footer-text">已有账户？<a href="/login">立即登录</a></p>
+    </main>
+    <script>
+        const form = document.getElementById('registerForm');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const successMessage = document.getElementById('successMessage');
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+        function showError(input, errorId) { input.classList.add('error'); document.getElementById(errorId).style.display = 'block'; }
+        function clearError(input, errorId) { input.classList.remove('error'); document.getElementById(errorId).style.display = 'none'; }
+
+        email.addEventListener('blur', () => { if (!emailRegex.test(email.value)) showError(email, 'emailError'); else clearError(email, 'emailError'); });
+        password.addEventListener('blur', () => { if (!passwordRegex.test(password.value)) showError(password, 'passwordError'); else clearError(password, 'passwordError'); });
+        confirmPassword.addEventListener('blur', () => { if (confirmPassword.value !== password.value) showError(confirmPassword, 'confirmError'); else clearError(confirmPassword, 'confirmError'); });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let valid = true;
+            if (!emailRegex.test(email.value)) { showError(email, 'emailError'); valid = false; }
+            if (!passwordRegex.test(password.value)) { showError(password, 'passwordError'); valid = false; }
+            if (confirmPassword.value !== password.value) { showError(confirmPassword, 'confirmError'); valid = false; }
+            if (!valid) return;
+            try {
+                const response = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email.value, password: password.value }) });
+                if (response.ok) { form.style.display = 'none'; successMessage.style.display = 'block'; setTimeout(() => window.location.href = '/login', 2000); }
+                else { const data = await response.json(); alert(data.message || '注册失败，请稍后重试'); }
+            } catch (err) { alert('网络错误，请检查您的连接'); }
+        });
+    </script>
+</body>
+</html>
