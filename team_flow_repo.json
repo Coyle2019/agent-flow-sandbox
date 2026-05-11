@@ -1,0 +1,46 @@
+{
+  "repo_type": "backend",
+  "default_branch": "main",
+  "allowed_change_actions": [
+    "replace_block",
+    "create_file",
+    "update_file"
+  ],
+  "allowed_write_paths": [
+    "src/**",
+    "tests/**",
+    "schemas/**",
+    "README.md",
+    "scripts/**",
+    ".team_flow/**"
+  ],
+  "available_checks": [
+    {
+      "check_id": "compile",
+      "command": "python3 -m compileall src tests"
+    },
+    {
+      "check_id": "repo_smoke",
+      "command": "python3 -c \"from pathlib import Path; required = [Path('README.md')]; raise SystemExit(0 if all(path.exists() for path in required) else 1)\""
+    }
+  ],
+  "template_repo": null,
+  "entrypoints": [
+    "src/**",
+    "tests/**",
+    "README.md"
+  ],
+  "owners": [
+    "Coyle2019"
+  ],
+  "required_reviewers": [
+    "Coyle2019"
+  ],
+  "depends_on_repos": [],
+  "build_commands": [
+    "python3 -m compileall src tests"
+  ],
+  "smoke_commands": [
+    "python3 -c \"from pathlib import Path; raise SystemExit(0 if Path('README.md').exists() else 1)\""
+  ]
+}
